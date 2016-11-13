@@ -1,9 +1,10 @@
+var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+var HtmlWebpackPluginConfig = {
     template: __dirname + '/src/index.html',
     filename: 'index.html',
     inject: 'body'
-});
+};
 
 module.exports = {
     entry: [
@@ -18,7 +19,7 @@ module.exports = {
             {
                 loader: 'babel-loader',
                 include: [
-                    __dirname + '/src'
+                    path.resolve(__dirname,'/src')
                 ],
                 test: /\.jsx?$/,
                 query:{
@@ -27,5 +28,5 @@ module.exports = {
             }
         ]
     },
-    plugins: [HtmlWebpackPluginConfig]
+    plugins: [new HtmlWebpackPlugin(HtmlWebpackPluginConfig)]
 };
