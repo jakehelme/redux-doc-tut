@@ -1,6 +1,7 @@
 var path = require('path');
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var HtmlWebpackPluginConfig = {
+var htmlWebpackPluginConfig = {
     template: __dirname + '/src/index.html',
     filename: 'index.html',
     inject: 'body'
@@ -19,14 +20,21 @@ module.exports = {
             {
                 loader: 'babel-loader',
                 include: [
-                    path.resolve(__dirname,'/src')
+                    path.resolve(__dirname,'src')
                 ],
                 test: /\.jsx?$/,
                 query:{
-                    presets: ['es2015', 'react']
+                    presets: ['react', 'es2015']
                 }
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin(HtmlWebpackPluginConfig)]
+    plugins: [
+        new HtmlWebpackPlugin(htmlWebpackPluginConfig),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        })
+    ]
 };
